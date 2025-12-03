@@ -93,7 +93,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     if (fetchService.isLoggedIn()) {
-      window.location.href = 'landingpage.html';
+      window.location.href = '/fe-internship/index.html';
     }
 
     document.getElementById('loginForm').addEventListener('submit', async function (e) {
@@ -103,7 +103,7 @@
         const password = document.getElementById('password').value;
         const result = await fetchService.login({ username, password });
         alert('Welcome back, ' + (result.user?.name || username));
-        window.location.href = 'landingpage.html';
+        window.location.href = '/fe-internship/index.html';
       } catch (err) {
         alert(err.message || 'Login failed.');
       }
