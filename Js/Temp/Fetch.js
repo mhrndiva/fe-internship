@@ -64,6 +64,46 @@ class FetchService {
       throw new Error(error.message || 'Registrasi gagal');
     }
   }
+
+  /**
+   * Login user dan simpan token jika berhasil
+   * @param {{username:string,password:string}} credentials
+   */
+  async login(credentials) {
+    try {
+      const data = await this.fetchWithConfig(API_URLS.login, {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+      });
+
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      if (data.user) {
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      return data;
+    } catch (error) {
+      throw new Error(error.message || 'Login gagal');
+    }
+  }
+
+  /**
+   * Cek apakah user sudah login (token tersimpan)
+   * @returns {boolean}
+   */
+  isLoggedIn() {
+    return !!localStorage.getItem('token');
+  }
+
+  /**
+   * Logout pengguna dan bersihkan penyimpanan
+   */
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
 }
 
 // Export instance tunggal
